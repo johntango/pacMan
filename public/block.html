@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <SCRIPT>
+        var flag = 1,
+            pos = 0,
+            img = null,
+            url = 'http://localhost:3000'; // change this to IP address of server
+
+        function Run() {
+            img = document.getElementById("PacMan");
+            pos += 20;
+            img.style.left = pos + "px";
+            if (flag === 1) {
+                img.src = url + '/pac?id=' + flag; // use flag to choose image
+                flag = 2;
+            } else {
+                flag = 1;
+            }
+            // send position data to Server in url
+            fetch(url + '/set?x=' + pos);
+        }
+    </SCRIPT>
+</head>
+
+<body>
+    <p>Click on PacMan and the position will be sent to the server".</p>
+    <img id="PacMan" src='http://localhost:3000/pac?id=2' onclick="Run()" style="position:absolute">
+</body>

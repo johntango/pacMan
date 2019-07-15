@@ -1,0 +1,26 @@
+<html>
+<head>
+	<SCRIPT>
+		var flag = 1;
+		var img1 = null;
+		var pos = 0;
+		function Run(){
+		img1 = document.getElementById("PacMan");
+		pos += 20;
+		img1.style.left = pos+"px";
+		if(flag === 1){
+			img1.src = "PacMan2.png";
+			flag=0;
+		}
+		else {
+			img1.src = "PacMan1.png";
+			flag=1;
+		}
+		}
+	</SCRIPT>
+</head>
+<body>
+	<img id="PacMan" src = "PacMan1.png"
+	onclick = "Run()" style="position:absolute"> </img>
+</body>
+</html>
