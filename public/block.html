@@ -11,12 +11,8 @@
             img = document.getElementById("PacMan");
             pos += 20;
             img.style.left = pos + "px";
-            if (flag === 1) {
-                img.src = url + '/pac?id=' + flag; // use flag to choose image
-                flag = 2;
-            } else {
-                flag = 1;
-            }
+            flag = (pos % 40 === 20) ? 1 : 2;  // alternate flag value beetwen 0 and 1
+            img.src = url + '/pac?id=' + flag; // use flag to choose image
             // send position data to Server in url
             fetch(url + '/set?x=' + pos);
         }
