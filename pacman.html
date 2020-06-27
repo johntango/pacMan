@@ -1,0 +1,26 @@
+<html>
+<SCRIPT>
+	var flag = 0;
+	var pos = 0;
+
+	function Run() {
+		let img = document.getElementById("PacMan");
+		pos += 20;
+		img.style.left = pos + "px";
+		// Can you find a better way to do this flip/flop of images 
+		if (flag === 1) {
+			img.src = "PacMan2.png";
+			flag = 0;
+		} else {
+			img.src = "PacMan1.png";
+			flag = 1;
+		}
+		// Can you automate movement with setTimeout( ????, 100 );
+	}
+</SCRIPT>
+
+<body>
+	<img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
+</body>
+
+</html>
