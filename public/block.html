@@ -2,7 +2,7 @@
 
 <head>
     <SCRIPT>
-        var flag = 1,
+        var flag = 2,
             pos = 0,
             img = null,
             url = 'http://localhost:3000'; // change this to IP address of server
@@ -11,12 +11,8 @@
             img = document.getElementById("PacMan");
             pos += 20;
             img.style.left = pos + "px";
-            if (flag === 1) {
-                img.src = url + '/pac?id=' + flag; // use flag to choose image
-                flag = 2;
-            } else {
-                flag = 1;
-            }
+            flag = (flag === 1) ? 2 : 1;
+            img.src = url + '/pac?id=' + flag; // use flag to choose image
             // send position data to Server in url
             fetch(url + '/set?x=' + pos);
         }
