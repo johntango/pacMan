@@ -1,26 +1,39 @@
 <html>
 <SCRIPT>
-	var flag = 0;
-	var pos = 0;
+    var pos = 0;
+    var direction = 'right'; // can be right or left
+    var bocaAbierta = new Boolean(true);
 
-	function Run() {
-		let img = document.getElementById("PacMan");
-		pos += 20;
-		img.style.left = pos + "px";
-		// Can you find a better way to do this flip/flop of images 
-		if (flag === 1) {
-			img.src = "PacMan2.png";
-			flag = 0;
-		} else {
-			img.src = "PacMan1.png";
-			flag = 1;
-		}
-		// Can you automate movement with setTimeout( ????, 100 );
-	}
+    function Run() {
+        let img = document.getElementById("PacMan");
+		alert(direction);
+        if (direction == "right"){
+            pos += 20;
+            if (bocaAbierta){
+                img.src = "PacMan1.png";
+            }else{
+                img.src = "PacMan2.png";
+                alert("hola");
+            }
+
+        }else{
+            pos -= 20;
+            if (bocaAbierta){
+                img.src = "PacMan3.png";
+            }else{
+                img.src = "PacMan4.png";
+            }
+        }
+        bocaAbierta = !bocaAbierta;
+        img.style.left = pos + "px";
+        // Can you find a better way to do this flip/flop of images 
+        
+        // Can you automate movement with setTimeout( ????, 100 );
+    }
 </SCRIPT>
 
 <body>
-	<img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
+    <img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
 </body>
 
 </html>
