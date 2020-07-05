@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <style>
+        .flip {
+            transform: scaleX(-1)
+        }
+    </style>
+    <SCRIPT>
+        var left = 0, direction = 0, img, timer;
+
+        function startOrTurn(event) {
+            if (!img)
+            {
+                img = document.getElementById("PacMan");
+            }
+            if (timer)
+            {
+                clearInterval(timer);
+                timer = null;
+                img.src = 'pac?id=2';
+            }
+            else 
+            {
+                img.src = 'pac?id=1';
+                direction = event.target.width / 2 - event.offsetX > 0 ? 1 : -1;
+                timer = setInterval(function () { move(50) }, 200);
+            }
+        }
+
+        function move(offset) {
+            left += direction * offset;
+
+            if (left <= 0)
+            {
+                left = 0;
+                img.className = '';
+                direction = 1;
+            }
+            else if (left + img.width > window.innerWidth)
+            {
+                img.className = 'flip';
+                left = window.innerWidth - img.width;
+                direction = -1;
+            }
+            
+            img.style.left = left + "px";
+            fetch('/set?x=' + left);
+        }
+    </SCRIPT>
+</head>
+
+<body>
+    <p>Click on PacMan and the position will be sent to the server".</p>
+    <img id="PacMan" src='pac?id=2' onclick="startOrTurn(event)" style="position:absolute">
+</body>
+</html>

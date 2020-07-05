@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var data = [];
 var root = path.resolve(__dirname) + '/public/';
 app.get('/', (req, res) => {
-    res.sendFile('block.html', { 'root': root });
+    res.sendFile('anton.html', { 'root': root });
 });
 app.get('/set', function(req, res) {
     console.log(JSON.stringify(req.query));
