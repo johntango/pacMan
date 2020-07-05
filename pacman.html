@@ -3,18 +3,22 @@
     var pos = 0;
     var direction = 'right'; // can be right or left
     var bocaAbierta = new Boolean(true);
+	var tamano = tamVentana() -80;
 
     function Run() {
         let img = document.getElementById("PacMan");
-		alert(direction);
+		
         if (direction == "right"){
             pos += 20;
             if (bocaAbierta){
                 img.src = "PacMan1.png";
             }else{
                 img.src = "PacMan2.png";
-                alert("hola");
+                
             }
+			if (pos > tamVentana()){
+				direction = "left";
+			}
 
         }else{
             pos -= 20;
@@ -23,13 +27,43 @@
             }else{
                 img.src = "PacMan4.png";
             }
+			if (pos < 0){
+				direction = "right";
+			}
         }
         bocaAbierta = !bocaAbierta;
+		
         img.style.left = pos + "px";
+
         // Can you find a better way to do this flip/flop of images 
         
         // Can you automate movement with setTimeout( ????, 100 );
+		setTimeout(Run(), 3000);
     }
+
+	function tamVentana() {
+		var tam = [0, 0];
+		if (typeof window.innerWidth != 'undefined')
+		{
+			tam = [window.innerWidth,window.innerHeight];
+		}
+		else if (typeof document.documentElement != 'undefined'
+			&& typeof document.documentElement.clientWidth !=
+			'undefined' && document.documentElement.clientWidth != 0)
+		{
+			tam = [
+				document.documentElement.clientWidth,
+				document.documentElement.clientHeight
+			];
+		}
+		else   {
+			tam = [
+				document.getElementsByTagName('body')[0].clientWidth,
+				document.getElementsByTagName('body')[0].clientHeight
+			];
+		}
+		return tam;
+		}
 </SCRIPT>
 
 <body>
