@@ -1,26 +1,96 @@
 <html>
 <SCRIPT>
-	var flag = 0;
-	var pos = 0;
+   //var bocaAbierta = new Boolean(true);
+	var tamano = tamVentana();
+	var topGlobal = 0;
 
-	function Run() {
-		let img = document.getElementById("PacMan");
-		pos += 20;
-		img.style.left = pos + "px";
-		// Can you find a better way to do this flip/flop of images 
-		if (flag === 1) {
-			img.src = "PacMan2.png";
-			flag = 0;
-		} else {
-			img.src = "PacMan1.png";
-			flag = 1;
+	
+	function load() {
+		let img1 = document.getElementById("PacMan");
+		Run(img1,"right",true,0,20,0	);
+		
+
+      }
+      window.onload = load;
+
+    function Run(img,direction,bocaAbierta,pos,speed,contador) {
+		
+		if (direction == "right"){
+            pos += speed;
+			
+            if (bocaAbierta){
+                img.src = "PacMan1.png";
+            }else{
+                img.src = "PacMan2.png";
+            }
+			if (pos > tamano){
+				direction = "left";
+			}
+
+        }else{
+            pos -= speed;
+            if (bocaAbierta){
+                img.src = "PacMan3.png";
+            }else{
+                img.src = "PacMan4.png";
+            }
+			if (pos < 0){
+				direction = "right";
+			}
+        }
+        bocaAbierta = !bocaAbierta;
+		
+        img.style.left = pos + "px";
+
+   		if (contador == 10){ //al cabo de 10 pases creamos más pacmans
+			crearPacman(img,pos,speed);
 		}
-		// Can you automate movement with setTimeout( ????, 100 );
+		contador++;
+        // Can you automate movement with setTimeout( ????, 100 );
+		setTimeout(Run, 100, img, direction,bocaAbierta,pos,speed,contador);
+    }
+
+	function crearPacman(img,pos,speed){
+			var img2 = document.createElement('img'); // Uso DOM HTMLImageElement
+		img2.height = img.height * 9/10;
+		img2.width = img.width   * 9/10;
+		img2.style.left = "0px";
+		topGlobal += 100;
+		img2.style.top = topGlobal + "px";
+		img2.style.position = "absolute";
+		img2.src = img.src;
+		document.body.appendChild(img2);
+		speed++;
+		setTimeout(Run, 100, img2,"right",true,pos,speed,0);
 	}
+
+	function tamVentana() {
+		var tam = [0, 0];
+		if (typeof window.innerWidth != 'undefined')
+		{
+			tam = [window.innerWidth,window.innerHeight];
+		}
+		else if (typeof document.documentElement != 'undefined'
+			&& typeof document.documentElement.clientWidth !=
+			'undefined' && document.documentElement.clientWidth != 0)
+		{
+			tam = [
+				document.documentElement.clientWidth,
+				document.documentElement.clientHeight
+			];
+		}
+		else   {
+			tam = [
+				document.getElementsByTagName('body')[0].clientWidth,
+				document.getElementsByTagName('body')[0].clientHeight
+			];
+		}
+		return parseFloat(tam);
+		}
 </SCRIPT>
 
 <body>
-	<img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
-</body>
+	<img id="PacMan" src="PacMan1.png" width='200' onclick="Run(this)" style="position:absolute"> </img>
+	</body>
 
 </html>
