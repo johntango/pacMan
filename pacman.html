@@ -1,27 +1,34 @@
 <html>
 <SCRIPT>
-    var pos = 0;
-    var direction = 'right'; // can be right or left
-    var bocaAbierta = new Boolean(true);
-	var tamano = tamVentana() -80;
+   //var bocaAbierta = new Boolean(true);
+	var tamano = tamVentana();
+	var topGlobal = 0;
 
-    function Run() {
-        let img = document.getElementById("PacMan");
+	
+	function load() {
+		let img1 = document.getElementById("PacMan");
+		Run(img1,"right",true,0,20,0	);
 		
-        if (direction == "right"){
-            pos += 20;
+
+      }
+      window.onload = load;
+
+    function Run(img,direction,bocaAbierta,pos,speed,contador) {
+		
+		if (direction == "right"){
+            pos += speed;
+			
             if (bocaAbierta){
                 img.src = "PacMan1.png";
             }else{
                 img.src = "PacMan2.png";
-                
             }
-			if (pos > tamVentana()){
+			if (pos > tamano){
 				direction = "left";
 			}
 
         }else{
-            pos -= 20;
+            pos -= speed;
             if (bocaAbierta){
                 img.src = "PacMan3.png";
             }else{
@@ -35,11 +42,27 @@
 		
         img.style.left = pos + "px";
 
-        // Can you find a better way to do this flip/flop of images 
-        
+   		if (contador == 10){ //al cabo de 10 pases creamos más pacmans
+			crearPacman(img,pos,speed);
+		}
+		contador++;
         // Can you automate movement with setTimeout( ????, 100 );
-		setTimeout(Run(), 3000);
+		setTimeout(Run, 100, img, direction,bocaAbierta,pos,speed,contador);
     }
+
+	function crearPacman(img,pos,speed){
+			var img2 = document.createElement('img'); // Uso DOM HTMLImageElement
+		img2.height = img.height * 9/10;
+		img2.width = img.width   * 9/10;
+		img2.style.left = "0px";
+		topGlobal += 100;
+		img2.style.top = topGlobal + "px";
+		img2.style.position = "absolute";
+		img2.src = img.src;
+		document.body.appendChild(img2);
+		speed++;
+		setTimeout(Run, 100, img2,"right",true,pos,speed,0);
+	}
 
 	function tamVentana() {
 		var tam = [0, 0];
@@ -62,12 +85,12 @@
 				document.getElementsByTagName('body')[0].clientHeight
 			];
 		}
-		return tam;
+		return parseFloat(tam);
 		}
 </SCRIPT>
 
 <body>
-    <img id="PacMan" src="PacMan1.png" width='200' onclick="Run()" style="position:absolute"> </img>
-</body>
+	<img id="PacMan" src="PacMan1.png" width='200' onclick="Run(this)" style="position:absolute"> </img>
+	</body>
 
 </html>
